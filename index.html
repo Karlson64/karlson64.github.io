@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELS TEAM</title>
+    <title>ELEESOV</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -23,34 +23,91 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             width: 100%;
             margin: 0 auto;
+            position: relative;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .username {
+            font-weight: 900;
+            font-size: 1.1rem;
+            background: linear-gradient(45deg, #000, #fff, #000);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: bw 3s ease infinite;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            border: 2px solid #333;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            background: url('https://i.ibb.co/218-NQBr1/218-NQBr1.jpg') center/cover;
+        }
+
+        .avatar:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
         }
 
         .card {
             background: #111;
             border-radius: 32px;
-            padding: 50px 40px;
+            padding: 40px 30px;
             margin-bottom: 30px;
             border: 1px solid #333;
-            transition: transform 0.3s ease;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
         }
 
         .card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            border-color: #444;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
 
         .header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
         .logo {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 900;
             margin-bottom: 15px;
             background: linear-gradient(45deg, #fff, #ccc);
@@ -58,30 +115,50 @@
             background-clip: text;
             color: transparent;
             letter-spacing: -1px;
+            animation: glow 2s ease-in-out infinite alternate;
         }
 
         .buttons {
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            margin-bottom: 50px;
+            gap: 15px;
+            margin-bottom: 40px;
+            align-items: center;
         }
 
         .btn {
-            padding: 22px 30px;
+            padding: 20px 25px;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 800;
             text-decoration: none;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             position: relative;
             overflow: hidden;
             border: 2px solid transparent;
+            cursor: pointer;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
         }
 
         .btn-primary {
@@ -96,111 +173,566 @@
         }
 
         .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 255, 255, 0.15);
         }
 
         .btn:active {
-            transform: translateY(0);
+            transform: translateY(-2px) scale(1.02);
         }
 
-        .profiles {
+        .users {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
             justify-content: center;
+            margin-top: 30px;
         }
 
-        .profile {
+        .user-card {
             background: #151515;
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #333;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .user-card:hover::before {
+            left: 100%;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #444;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .user-card:hover .user-avatar {
+            border-color: #fff;
+            transform: scale(1.1);
+        }
+
+        .user-name {
+            font-weight: 800;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #000, #fff, #000);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: bw 3s ease infinite;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #111;
             border-radius: 24px;
             padding: 30px;
+            max-width: 450px;
             width: 100%;
-            max-width: 370px;
             text-align: center;
             border: 1px solid #333;
+            animation: slideUp 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            transform-origin: center;
         }
 
-        .profile-title {
+        .modal-success {
+            border-color: rgba(0, 216, 54, 0.5);
+        }
+
+        .modal-warning {
+            border-color: rgba(255, 50, 50, 0.5);
+        }
+
+        .modal-title {
             font-size: 1.6rem;
             font-weight: 900;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             background: linear-gradient(45deg, #fff, #999);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .profile-desc {
-            font-size: 1.1rem;
-            line-height: 1.5;
-            opacity: 0.8;
-            font-weight: 700;
-        }
-
-        .warning {
-            background: rgba(255, 50, 50, 0.1);
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px solid rgba(255, 50, 50, 0.3);
-        }
-
-        .warning-text {
-            color: #ff3232;
-            font-weight: 800;
+        .modal-desc {
             font-size: 1rem;
+            line-height: 1.5;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .modal-timer {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #00d836;
+            margin: 15px 0;
+            animation: countdown 1s ease infinite;
+        }
+
+        .modal-link {
+            color: #00d836;
+            text-decoration: none;
+            word-break: break-all;
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(0, 216, 54, 0.1);
+            border-radius: 12px;
+            border: 1px solid rgba(0, 216, 54, 0.3);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .modal-link:hover {
+            background: rgba(0, 216, 54, 0.2);
+            transform: scale(1.02);
+        }
+
+        .lang-switcher {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .lang-btn {
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .lang-btn.active {
+            background: #fff;
+            color: #000;
+            transform: scale(1.1);
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(40px) scale(0.9);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+            to { text-shadow: 0 0 20px rgba(255,255,255,0.6); }
+        }
+
+        @keyframes bw {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes countdown {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
 
         @media (min-width: 768px) {
             .buttons {
                 flex-direction: row;
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
             .btn {
-                min-width: 250px;
+                width: auto;
+                min-width: 220px;
+            }
+
+            .logo {
+                font-size: 4rem;
+            }
+
+            .card {
+                padding: 50px 40px;
+            }
+
+            .users {
+                gap: 20px;
+            }
+
+            .user-card {
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .btn {
+                padding: 18px 20px;
+                font-size: 1rem;
+            }
+            
+            .user-card {
+                padding: 15px;
+            }
+            
+            .user-avatar {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .user-name {
+                font-size: 1rem;
+            }
+            
+            .modal-content {
+                padding: 20px;
             }
         }
     </style>
+
+<style>
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+.overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+.overlay-text {
+    color: white;
+    font-size: 24px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    cursor: pointer;
+}
+</style>
+<div class="overlay" id="muteOverlay">
+    <div class="overlay-text">Press the screen</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.getElementById('muteOverlay');
+    overlay.style.display = 'flex';
+    overlay.addEventListener('click', function() {
+        overlay.classList.add('hidden');
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 500);
+    });
+});
+</script>
+
 </head>
 <body>
+    
+<audio id="bgm" loop muted><source src="sh.mp3"></audio><script>document.addEventListener('click',()=>{bgm.volume=0.5;bgm.muted=false;bgm.play()},{once:true})</script>
+
     <div class="container">
+        <div class="user-info">
+            <div class="username">@miseryqqef</div>
+            <div class="avatar"></div>
+        </div>
+
         <div class="card">
+            <div class="lang-switcher">
+                <button class="lang-btn active" data-lang="ru">RU</button>
+                <button class="lang-btn" data-lang="en">EN</button>
+            </div>
+            
             <div class="header">
-                <div class="logo">ELS TEAM</div>
+                <div class="logo">ELEESOV</div>
             </div>
             
             <div class="buttons">
                 <a href="https://discord.com/invite/9qahFUmbpe" class="btn btn-primary">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M18.59 5.88999C17.36 5.31999 16.05 4.89999 14.68 4.65999C14.5 4.94999 14.3 5.33999 14.16 5.66999C12.68 5.45999 11.21 5.45999 9.75 5.66999C9.61 5.32999 9.41 4.94999 9.22 4.65999C7.85 4.89999 6.54 5.31999 5.31 5.88999C3.25 9.09999 2.69 12.2 3.03 15.24C4.65 16.36 6.24 17.05 7.8 17.49C8.24 16.89 8.63 16.25 8.97 15.58C8.35 15.33 7.76 15.02 7.2 14.66C7.39 14.53 7.57 14.39 7.75 14.25C11.33 15.82 15.04 15.82 18.58 14.25C18.76 14.39 18.94 14.53 19.13 14.66C18.57 15.02 17.98 15.33 17.36 15.58C17.7 16.25 18.09 16.89 18.53 17.49C20.09 17.05 21.68 16.36 23.3 15.24C23.72 11.57 22.76 8.45999 20.17 5.88999H18.59ZM9 13.18C8.12 13.18 7.41 12.38 7.41 11.4C7.41 10.42 8.1 9.61999 9 9.61999C9.9 9.61999 10.59 10.42 10.59 11.4C10.6 12.38 9.9 13.18 9 13.18ZM15 13.18C14.12 13.18 13.41 12.38 13.41 11.4C13.41 10.42 14.1 9.61999 15 9.61999C15.9 9.61999 16.59 10.42 16.59 11.4C16.59 12.38 15.89 13.18 15 13.18Z" fill="currentColor"/>
                     </svg>
-                    СООБЩЕСТВО
+                    <span data-text="com">СЕРВАЧОК</span>
                 </a>
                 
-                <a href="https://discord.com/oauth2/authorize?client_id=1310668495301902426" class="btn btn-secondary">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <button class="btn btn-secondary" id="bBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2"/>
                         <path d="M12 8V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                         <path d="M8 12H16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                     </svg>
-                    ДОБАВИТЬ БОТА
-                </a>
+                    <span data-text="bTxt">ДОБАВИТЬ БОТА</span>
+                </button>
+
+                <button class="btn btn-secondary" id="aBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M10 3H4C3.46957 3 2.96086 3.21071 2.58579 3.58579C2.21071 3.96086 2 4.46957 2 5V19C2 19.5304 2.21071 20.0391 2.58579 20.4142C2.96086 20.7893 3.46957 21 4 21H20C20.5304 21 21.0391 20.7893 21.4142 20.4142C21.7893 20.0391 22 19.5304 22 19V9C22 8.46957 21.7893 7.96086 21.4142 7.58579C21.0391 7.21071 20.5304 7 20 7H14L12 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span data-text="aTxt">ДОБАВИТЬ ПРИЛОЖЕНИЕ</span>
+                </button>
             </div>
-            
-            <div class="profiles">
-                <div class="profile">
-                    <div class="profile-title">ЭЙ!</div>
-                    <div class="profile-desc">
-                        ЭТО КРАШ БОТ, ПРИ ДОБАВЛЕНИИ НА СЕРВЕР УНИЧТОЖИТ ЕГО ПОЭТОМУ НЕ ДОБАВЛЯЙТЕ НА СВОЙ СЕРВЕР
-                    </div>
-                    <div class="warning">
-                        <div class="warning-text">⚠️ МЫ СТОЛКНУЛИСЬ С НЕКОТОРЫМИ ПРОБЛЕМАМИ,СЛЕДИТЕ ЗА НОВОСТЯМИ ОТ ВЫСШЕЙ АДМИНИСТРАЦИИ В НАШЕМ ДИСКОРДЕ</div>
-                    </div>
+
+            <div class="users">
+                <div class="user-card">
+                    <img src="https://i.ibb.co/Ndrg-TnC2/Ndrg-TnC2.jpg" class="user-avatar">
+                    <div class="user-name">@frostkill_4299</div>
+                </div>
+                <div class="user-card">
+                    <img src="https://i.ibb.co/Hp-CH1-QNS/Hp-CH1-QNS.jpg" class="user-avatar">
+                    <div class="user-name">@wzone_konan</div>
+                </div>
+                <div class="user-card">
+                    <img src="https://i.ibb.co/Fk8-n8tfc/Fk8-n8tfc.jpg" class="user-avatar">
+                    <div class="user-name">@msctop4</div>
+                </div>
+                <div class="user-card">
+                    <img src="https://i.ibb.co/whd-41-NM6/whd-41-NM6.jpg" class="user-avatar">
+                    <div class="user-name">@apostalpetr2</div>
+                </div>
+                <div class="user-card">
+                    <img src="https://i.ibb.co/x8-Cx-Vt8-S/x8-Cx-Vt8-S.jpg" class="user-avatar">
+                    <div class="user-name">@nowesqyy</div>
+                </div>
+                <div class="user-card">
+                    <img src="https://i.ibb.co/LXV-px773/LXV-px773.jpg" class="user-avatar">
+                    <div class="user-name">@foxlutor</div>
+                </div>
+                <div class="user-card">
+                    <img src="https://i.ibb.co/Kp-Kt-NPVw/Kp-Kt-NPVw.jpg" class="user-avatar">
+                    <div class="user-name">@dozageraina228</div>
+                </div>
+                <div class="user-card">
+                    <img src="https://i.ibb.co/Kp-Kt-NPVw/Kp-Kt-NPVw.jpg" class="user-avatar">
+                    <div class="user-name">@_._.sleep._._</div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal" id="sM">
+        <div class="modal-content modal-success">
+            <div class="modal-title" data-text="sT">УСПЕШНО</div>
+            <div class="modal-desc" data-text="sD">
+                Все прошло успешно! Вы будете перенаправлены на сайт через <span class="modal-timer">5</span> секунд.
+            </div>
+            <div class="modal-link" id="cL">https://discord.com/oauth2/authorize?client_id=1310668495301902426</div>
+            <div class="modal-desc" data-text="cT">Ссылка скопирована в буфер обмена!</div>
+        </div>
+    </div>
+
+    <div class="modal" id="wM">
+        <div class="modal-content modal-warning">
+            <div class="modal-title" data-text="wT">ВНИМАНИЕ</div>
+            <div class="modal-desc" data-text="wD">
+                Бот в настоящее время не работает. Пожалуйста, попробуйте позже.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const w = true;
+        const aW = true;
+        const bU = "https://discord.com/oauth2/authorize?client_id=1430902749616410624&permissions=8&integration_type=0&scope=bot";
+        const aU = "https://discord.com/oauth2/authorize?client_id=1430657890204778637&scope=applications.commands";
+        
+        const bB = document.getElementById('bBtn');
+        const aB = document.getElementById('aBtn');
+        const sM = document.getElementById('sM');
+        const wM = document.getElementById('wM');
+        const cL = document.getElementById('cL');
+        const tE = document.querySelector('.modal-timer');
+        const lB = document.querySelectorAll('.lang-btn');
+        const bgm = document.getElementById('bgm');
+        
+        const t = {
+            ru: {
+                com: "СЕРВАЧОК",
+                bTxt: "ДОБАВИТЬ БОТА",
+                aTxt: "ДОБАВИТЬ ПРИЛОЖЕНИЕ",
+                sT: "УСПЕШНО",
+                sD: "Все прошло успешно! Вы будете перенаправлены на сайт через <span class=\"modal-timer\">5</span> секунд.",
+                wT: "ВНИМАНИЕ",
+                wD: "Бот в настоящее время не работает. Пожалуйста, попробуйте позже.",
+                aD: "Приложение в настоящее время не работает. Пожалуйста, попробуйте позже.",
+                cT: "Ссылка скопирована в буфер обмена!"
+            },
+            en: {
+                com: "COMMUNITY",
+                bTxt: "ADD BOT",
+                aTxt: "ADD APPLICATION",
+                sT: "SUCCESS",
+                sD: "Everything went well! You will be redirected to the site in <span class=\"modal-timer\">5</span> seconds.",
+                wT: "WARNING",
+                wD: "The bot is currently not working. Please try again later.",
+                aD: "The application is currently not working. Please try again later.",
+                cT: "Link copied to clipboard!"
+            }
+        };
+
+        let cLg = 'ru';
+
+        function sL(l) {
+            cLg = l;
+            document.querySelectorAll('[data-text]').forEach(e => {
+                const k = e.getAttribute('data-text');
+                if (t[l][k]) {
+                    if (k === 'sD') {
+                        e.innerHTML = t[l][k];
+                    } else {
+                        e.textContent = t[l][k];
+                    }
+                }
+            });
+            
+            lB.forEach(b => {
+                b.classList.toggle('active', b.getAttribute('data-lang') === l);
+            });
+        }
+
+        function showModal(m) {
+            m.style.display = 'flex';
+        }
+
+        function hideModal(m) {
+            m.style.display = 'none';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {});
+        }
+
+        function startCountdown(seconds, callback) {
+            let count = seconds;
+            tE.textContent = count;
+            
+            const interval = setInterval(() => {
+                count--;
+                tE.textContent = count;
+                
+                if (count <= 0) {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, 1000);
+        }
+
+        bB.addEventListener('click', () => {
+            if (w) {
+                copyToClipboard(bU);
+                cL.textContent = bU;
+                showModal(sM);
+                startCountdown(5, () => {
+                    window.location.href = bU;
+                });
+            } else {
+                showModal(wM);
+            }
+        });
+
+        aB.addEventListener('click', () => {
+            if (aW) {
+                copyToClipboard(aU);
+                cL.textContent = aU;
+                showModal(sM);
+                startCountdown(5, () => {
+                    window.location.href = aU;
+                });
+            } else {
+                document.querySelector('[data-text="wD"]').textContent = t[cLg].aD;
+                showModal(wM);
+            }
+        });
+
+        lB.forEach(b => {
+            b.addEventListener('click', () => {
+                const l = b.getAttribute('data-lang');
+                sL(l);
+            });
+        });
+
+        [sM, wM].forEach(m => {
+            m.addEventListener('click', (e) => {
+                if (e.target === m) {
+                    hideModal(m);
+                }
+            });
+        });
+
+        bgm.play().catch(() => {
+            console.log('Audio play failed');
+        });
+        
+        sL('ru');
+    </script>
 </body>
 </html>
